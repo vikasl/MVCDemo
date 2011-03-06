@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="EmployeeModelStoreContainer">
+          <EntitySet Name="Department" EntityType="EmployeeModel.Store.Department" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Dependent" EntityType="EmployeeModel.Store.Dependent" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Dept_Locations" EntityType="EmployeeModel.Store.Dept_Locations" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Employee" EntityType="EmployeeModel.Store.Employee" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Project" EntityType="EmployeeModel.Store.Project" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Works_On" EntityType="EmployeeModel.Store.Works_On" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+        </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DNumber" />
+          </Key>
+          <Property Name="Dname" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="DNumber" Type="int" Nullable="false" />
+          <Property Name="MgrSsn" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="MgrStartDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Dependent">
+          <Key>
+            <PropertyRef Name="Essn" />
+            <PropertyRef Name="Dependent_name" />
+          </Key>
+          <Property Name="Essn" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="Dependent_name" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Sex" Type="char" MaxLength="1" />
+          <Property Name="Bdate" Type="datetime" />
+          <Property Name="Relationship" Type="varchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Dept_Locations">
+          <Key>
+            <PropertyRef Name="Dnumber" />
+            <PropertyRef Name="Dlocation" />
+          </Key>
+          <Property Name="Dnumber" Type="int" Nullable="false" />
+          <Property Name="Dlocation" Type="varchar" Nullable="false" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Ssn" />
+          </Key>
+          <Property Name="Fname" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Minit" Type="char" MaxLength="1" />
+          <Property Name="Lname" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Ssn" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="Bdate" Type="datetime" />
+          <Property Name="Address" Type="varchar" MaxLength="30" />
+          <Property Name="Sex" Type="char" MaxLength="1" />
+          <Property Name="Salary" Type="int" />
+          <Property Name="Super_ssn" Type="char" MaxLength="9" />
+          <Property Name="Dno" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Pnumber" />
+          </Key>
+          <Property Name="Pname" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Pnumber" Type="int" Nullable="false" />
+          <Property Name="Plocation" Type="varchar" MaxLength="15" />
+          <Property Name="Dnum" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Works_On">
+          <Key>
+            <PropertyRef Name="Essn" />
+            <PropertyRef Name="Pno" />
+          </Key>
+          <Property Name="Essn" Type="char" Nullable="false" MaxLength="9" />
+          <Property Name="Pno" Type="int" Nullable="false" />
+          <Property Name="Hours" Type="int" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="EmployeeEntities">
+          <EntitySet Name="Departments" EntityType="EmployeeModel.Department" />
+          <EntitySet Name="Dependents" EntityType="EmployeeModel.Dependent" />
+          <EntitySet Name="Dept_Locations" EntityType="EmployeeModel.Dept_Locations" />
+          <EntitySet Name="Employees" EntityType="EmployeeModel.Employee" />
+          <EntitySet Name="Projects" EntityType="EmployeeModel.Project" />
+          <EntitySet Name="Works_On" EntityType="EmployeeModel.Works_On" />
+        </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DNumber" />
+          </Key>
+          <Property Name="Dname" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="DNumber" Type="Int32" Nullable="false" />
+          <Property Name="MgrSsn" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="MgrStartDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="Dependent">
+          <Key>
+            <PropertyRef Name="Essn" />
+            <PropertyRef Name="Dependent_name" />
+          </Key>
+          <Property Name="Essn" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="Dependent_name" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Bdate" Type="DateTime" />
+          <Property Name="Relationship" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Dept_Locations">
+          <Key>
+            <PropertyRef Name="Dnumber" />
+            <PropertyRef Name="Dlocation" />
+          </Key>
+          <Property Name="Dnumber" Type="Int32" Nullable="false" />
+          <Property Name="Dlocation" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Ssn" />
+          </Key>
+          <Property Name="Fname" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Minit" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Lname" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Ssn" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="Bdate" Type="DateTime" />
+          <Property Name="Address" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Sex" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="Salary" Type="Int32" />
+          <Property Name="Super_ssn" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="Dno" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Pnumber" />
+          </Key>
+          <Property Name="Pname" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Pnumber" Type="Int32" Nullable="false" />
+          <Property Name="Plocation" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Dnum" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Works_On">
+          <Key>
+            <PropertyRef Name="Essn" />
+            <PropertyRef Name="Pno" />
+          </Key>
+          <Property Name="Essn" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="Pno" Type="Int32" Nullable="false" />
+          <Property Name="Hours" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeEntities">
+          <EntitySetMapping Name="Departments"><EntityTypeMapping TypeName="EmployeeModel.Department"><MappingFragment StoreEntitySet="Department">
+            <ScalarProperty Name="Dname" ColumnName="Dname" />
+            <ScalarProperty Name="DNumber" ColumnName="DNumber" />
+            <ScalarProperty Name="MgrSsn" ColumnName="MgrSsn" />
+            <ScalarProperty Name="MgrStartDate" ColumnName="MgrStartDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Dependents"><EntityTypeMapping TypeName="EmployeeModel.Dependent"><MappingFragment StoreEntitySet="Dependent">
+            <ScalarProperty Name="Essn" ColumnName="Essn" />
+            <ScalarProperty Name="Dependent_name" ColumnName="Dependent_name" />
+            <ScalarProperty Name="Sex" ColumnName="Sex" />
+            <ScalarProperty Name="Bdate" ColumnName="Bdate" />
+            <ScalarProperty Name="Relationship" ColumnName="Relationship" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Dept_Locations"><EntityTypeMapping TypeName="EmployeeModel.Dept_Locations"><MappingFragment StoreEntitySet="Dept_Locations">
+            <ScalarProperty Name="Dnumber" ColumnName="Dnumber" />
+            <ScalarProperty Name="Dlocation" ColumnName="Dlocation" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Employees"><EntityTypeMapping TypeName="EmployeeModel.Employee"><MappingFragment StoreEntitySet="Employee">
+            <ScalarProperty Name="Fname" ColumnName="Fname" />
+            <ScalarProperty Name="Minit" ColumnName="Minit" />
+            <ScalarProperty Name="Lname" ColumnName="Lname" />
+            <ScalarProperty Name="Ssn" ColumnName="Ssn" />
+            <ScalarProperty Name="Bdate" ColumnName="Bdate" />
+            <ScalarProperty Name="Address" ColumnName="Address" />
+            <ScalarProperty Name="Sex" ColumnName="Sex" />
+            <ScalarProperty Name="Salary" ColumnName="Salary" />
+            <ScalarProperty Name="Super_ssn" ColumnName="Super_ssn" />
+            <ScalarProperty Name="Dno" ColumnName="Dno" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Projects"><EntityTypeMapping TypeName="EmployeeModel.Project"><MappingFragment StoreEntitySet="Project">
+            <ScalarProperty Name="Pname" ColumnName="Pname" />
+            <ScalarProperty Name="Pnumber" ColumnName="Pnumber" />
+            <ScalarProperty Name="Plocation" ColumnName="Plocation" />
+            <ScalarProperty Name="Dnum" ColumnName="Dnum" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Works_On"><EntityTypeMapping TypeName="EmployeeModel.Works_On"><MappingFragment StoreEntitySet="Works_On">
+            <ScalarProperty Name="Essn" ColumnName="Essn" />
+            <ScalarProperty Name="Pno" ColumnName="Pno" />
+            <ScalarProperty Name="Hours" ColumnName="Hours" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Employee">
+        <EntityTypeShape EntityType="EmployeeModel.Department" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5923063151041665" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Dependent" Width="1.5" PointX="2.75" PointY="0.75" Height="1.7566536458333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Dept_Locations" Width="1.5" PointX="0.75" PointY="3.75" Height="1.2636116536458335" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Employee" Width="1.5" PointX="2.75" PointY="3.75" Height="2.5783902994791656" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Project" Width="1.5" PointX="4.75" PointY="0.75" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeModel.Works_On" Width="1.5" PointX="4.75" PointY="3.75" Height="1.4279589843749996" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,186 @@
+﻿.gridRow
+{
+    clear: both;
+    height: 18px;
+    padding: 3px 0;
+}
+
+.gridRowItem, .gridHeaderRowItem
+{
+    float: left;
+    margin-left: 10px;
+    height: 18px;
+}
+
+.gridRowItem span
+{
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.gridHeaderRowItem
+{
+    padding-top: 2px;
+}
+.gridHeaderRowItem.sortUnsorted
+{
+    background-image: url('../Images/tablesorter_unsorted.gif');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.gridHeaderRowItem.sortAscending
+{
+    background-image: url('../Images/tablesorter_asc.gif');
+}
+.gridHeaderRowItem.sortDescending
+{
+    background-image: url('../Images/tablesorter_desc.gif');
+}
+.gridHeaderRowItem.withBorder
+{
+    border-right: 1px solid #FFFFFF;
+}
+
+.gridRowContainer
+{
+    padding: 2px 0;
+    width: 97%;
+}
+
+.gridRowContainer.alternateRow
+{
+    background-color: #EFF1F2;
+}
+
+.gridHeaderRow
+{
+    background-color: #BBBBBB;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: .9em;
+    width: 100%;
+    height: 20px;
+}
+
+
+
+/*
+Employee Grid
+*/
+
+.gridColumnFname
+{
+    width: 80px;
+}
+.gridColumnMinit
+{
+    width: 50px;
+}
+.gridColumnLname
+{
+    width: 100px;
+}
+.gridColumnSsn
+{
+    width: 100px;
+}
+.gridColumnBdate
+{
+    width: 100px;
+}
+.gridColumnAddress
+{
+    width: 175px;
+}
+
+
+.gridColumnSex
+{
+    width: 30px;
+}
+.gridColumnSalary
+{
+    width: 100px;
+}
+
+.gridColumnSuper_ssn
+{
+    width: 100px;
+}
+
+.gridColumnDno
+{
+    width: 100px;
+}
+.gridMinimumWidth
+{
+    min-width: 725px;
+}
+.gridMinimumHeight
+{
+    min-height: 100px;
+}
+/*
+Header Heights for Employee Grid
+*/
+
+#employeeGridHeaderContainer .gridColumnFname
+{
+    height: 40px;
+}
+#employeeGridHeaderContainer .gridColumnMinit
+{
+    height: 40px;
+}
+#employeeGridHeaderContainer .gridColumnLname
+{
+    height: 40px;
+}
+#employeeGridHeaderContainer .gridColumnSsn
+{
+    height: 40px;
+}
+#employeeGridHeaderContainer .gridColumnBdate
+{
+    height: 40px;
+}
+#employeeGridHeaderContainer .gridColumnAddress
+{
+    height: 40px;
+}
+
+#employeeGridHeaderContainer .gridColumnSalary
+{
+    height: 40px;
+}
+
+#employeeGridHeaderContainer .gridColumnSuper_ssn
+{
+    height: 40px;
+}
+
+#employeeGridHeaderContainer .gridColumnDno
+{
+    height: 40px;
+}
+
+.editEmployeeRow
+{
+    height: 30px;
+    vertical-align: middle;
+    width: 470px;
+    padding-left: 30px;
+}
+.editEmployeeRowLabel
+{
+    float: left;
+    padding: 1px 0 0;
+    width: 100px;
+}
+
+.editEmployeeRowTextField
+{
+    float: left;
+    width: 205px;
+}
+
