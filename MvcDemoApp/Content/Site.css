@@ -342,3 +342,10 @@ div#title
 {
     width: 6em;
 }
+
+.disabled
+{
+ border: #3532ff 1px solid; 
+ color: #dcdcdc; 
+ cursor: default; 
+}

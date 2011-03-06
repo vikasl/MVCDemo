@@ -74,14 +74,14 @@ namespace MvcDemoApp.Tests.Controllers
         public void EditEmployee_Post_Should_Return_EditEmployee_View_With_Required_Data_Missing()
         {
 
-            var employee = new EmployeeViewModel {Fname = "Ray", Lname = "Romano"/*, Ssn = "123-09-3214"*/};
+            var employee = new EmployeeViewModel { Fname = "Ray",  Ssn = "123-03-0989", Dno = 99 };
             var validationContext = new ValidationContext(employee, null, null);
             var testRepository = new TestRepository();
  
             var employeeController = new EmployeeController(testRepository);
 
             var validationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(employee, validationContext, validationResults);
+            Validator.TryValidateObject(employee, validationContext, validationResults, true);
             foreach (var validationResult in validationResults)
             {
                 employeeController.ModelState.AddModelError(validationResult.MemberNames.First(), validationResult.ErrorMessage);
@@ -152,7 +152,7 @@ namespace MvcDemoApp.Tests.Controllers
         [TestMethod]
         public void EditEmployee_Post_Should_Save_And_Redirect_ToIndex_When_Data_Is_Valid()
         {
-            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Ssn = "123-02-1234", Dno = 99 };
+            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Bdate = new DateTime(1980, 10, 01), Ssn = "123-02-1234", Dno = 99 };
             var validationContext = new ValidationContext(employee, null, null);
             var testRepository = new TestRepository();
 
@@ -192,7 +192,7 @@ namespace MvcDemoApp.Tests.Controllers
         [TestMethod]
         public void AddEmployee_Post_Should_Call_Save_On_Reposiotry_And_Redirect_To_Index()
         {
-            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Ssn = "123-02-1234", Dno = 99 };
+            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Bdate = new DateTime(1980,10,01), Ssn = "123-02-1234", Dno = 99 };
             var validationContext = new ValidationContext(employee, null, null);
 
             //Create a mock repository 

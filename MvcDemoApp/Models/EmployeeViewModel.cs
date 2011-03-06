@@ -9,14 +9,14 @@ namespace MvcDemoApp.Models
         [Required(ErrorMessage = "First name cannot be null")]
         public string Fname { get; set; }
         
+
         public char Minit { get; set; }
 
         [Required(ErrorMessage = "LastName cannot be null")]
         
         public string Lname { get; set; }
         
-        [Required(ErrorMessage = "SSN is a required field")]
-        [RegularExpression(@"^(?!000)([0-6]\d{2}|7([0-6]\d|7[012]))([ -]?)(?!00)\d\d\3(?!0000)\d{4}$", ErrorMessage = "Social Security Number is not Valid")]
+         [RegularExpression(@"^(?!000)([0-6]\d{2}|7([0-6]\d|7[012]))([ -]?)(?!00)\d\d\3(?!0000)\d{4}$", ErrorMessage = "Social Security Number is not Valid")]
         public string Ssn { get; set; }
 
         [Range(typeof(DateTime), "1/2/1800", "1/1/2020", ErrorMessage = "Date is not valid")] 
@@ -27,6 +27,7 @@ namespace MvcDemoApp.Models
         public char Sex { get; set; }
         
         public int Salary { get; set; }
+
 
         [RegularExpression(@"^(?!000)([0-6]\d{2}|7([0-6]\d|7[012]))([ -]?)(?!00)\d\d\3(?!0000)\d{4}$", ErrorMessage = "Social Security Number is not Valid")]
         public string Super_ssn { get; set; }

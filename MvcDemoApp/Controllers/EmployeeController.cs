@@ -40,6 +40,8 @@ namespace MvcDemoApp.Controllers
         {
             var employeeList = _repository.GetAllEmployees();
 
+            System.Threading.Thread.Sleep(1000);
+
             return Json(employeeList);
         }
 
@@ -70,26 +72,28 @@ namespace MvcDemoApp.Controllers
             {
                 var employee = _repository.GetEmployee(employeeViewModel.Ssn);
 
+                if (employee != null)
+                {
+                    employee.Fname = employeeViewModel.Fname;
+                    employee.Lname = employeeViewModel.Lname;
+                    employee.Minit = employeeViewModel.Minit.ToString();
+                    employee.Bdate = employeeViewModel.Bdate;
+                    employee.Dno = employeeViewModel.Dno;
+                    employee.Salary = employeeViewModel.Salary;
+                    employee.Sex = employeeViewModel.Sex.ToString();
 
-                employee.Fname = employeeViewModel.Fname;
-                employee.Lname = employeeViewModel.Lname;
-                employee.Minit = employeeViewModel.Minit.ToString();
-                employee.Bdate = employeeViewModel.Bdate;
-                employee.Dno = employeeViewModel.Dno;
-                employee.Salary = employeeViewModel.Salary;
-                employee.Sex = employeeViewModel.Sex.ToString();
-                
-                employee.Super_ssn = employeeViewModel.Super_ssn;
-                employee.Address = employeeViewModel.Address;
+                    employee.Super_ssn = employeeViewModel.Super_ssn;
+                    employee.Address = employeeViewModel.Address;
 
-                //Map ViewModel object to domain object
-                //employee = Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
-               
-                
+                    //Map ViewModel object to domain object
+                    //employee = Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
 
-                employee.Salary = 20000;
-               
-               
+
+
+                    employee.Salary = 20000;
+                }
+
+
 
                 _repository.Save();
             }
