@@ -21,11 +21,15 @@ namespace MvcDemoApp.Controllers
 
             //Automapper configuration to map domain entity to viewmodel entity
             Mapper.CreateMap<Employee, EmployeeViewModel>();
-            //Automaper configuration to map viewmodel entity to domain entity
-            Mapper.CreateMap<EmployeeViewModel, Employee>();
-            //Type of 
+            //Conversion function to convert string type to char. Middle Initial and Sex are defined as string in domain
+            // and they are character type in view model
             Mapper.CreateMap<string, char>().ConvertUsing(x => x != null ? Convert.ToChar(x) : ' ');
-            //AutoMapper.Mapper.CreateMap<char, string>().ConvertUsing(x => x!= null?Convert.ToString(x):null);
+            //Automaper configuration to map viewmodel entity to domain entity
+            
+            //Automapper configuration to map viewmodel back to entity
+            Mapper.CreateMap<EmployeeViewModel, Employee>();
+            Mapper.CreateMap<char, string>().ConvertUsing(x => x!= null?Convert.ToString(x):null);
+
         }
 
         public ViewResult Index()
@@ -40,12 +44,20 @@ namespace MvcDemoApp.Controllers
         {
             var employeeList = _repository.GetAllEmployees();
 
+            //Sleep to simulate some delay on server side in procuring data
             System.Threading.Thread.Sleep(1000);
 
             return Json(employeeList);
         }
 
 
+
+        /// <summary>
+        /// Action method gets called when user clicks on Edit Employee link on 
+        /// List Employee view
+        /// </summary>
+        /// <param name="essn"></param>
+        /// <returns></returns>
         [HttpGet]
         public ViewResult EditEmployee(string essn)
         {
@@ -54,10 +66,17 @@ namespace MvcDemoApp.Controllers
             //Map domain entity with EmployeeViewModel
             EmployeeViewModel employeeViewModel = Mapper.Map<Employee, EmployeeViewModel>(employee);
 
+            employeeViewModel.EditMode = true;
             return View("EditEmployee", employeeViewModel);
         }
 
 
+        /// <summary>
+        /// This action method gets called when user clicks on 
+        /// save button after editing employee data on the form
+        /// </summary>
+        /// <param name="employeeViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EditEmployee(EmployeeViewModel employeeViewModel)
         {
@@ -66,6 +85,7 @@ namespace MvcDemoApp.Controllers
 
             if (!ModelState.IsValid)
             {
+                employeeViewModel.EditMode = true;
                 return View("EditEmployee", employeeViewModel);
             }
             else
@@ -103,18 +123,12 @@ namespace MvcDemoApp.Controllers
         }
 
 
-   
-        public ActionResult DeleteEmployee(string essn)
-        {
-            
 
-            var employee = _repository.GetEmployee(essn);
-            _repository.Delete(employee);
-            _repository.Save();
-            return RedirectToAction("Index");
-        }
-
-
+        /// <summary>
+        /// This action method gets called when user clicks on Add Employee LInk on
+        /// ListEmployee View
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ViewResult AddEmployee()
         {
@@ -122,6 +136,12 @@ namespace MvcDemoApp.Controllers
             return View("AddEmployee", employee);
         }
 
+        /// <summary>
+        /// This action method is called when user clicks on save button after entering
+        /// data on form for a new employee to be added
+        /// </summary>
+        /// <param name="employeeViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddEmployee(EmployeeViewModel employeeViewModel)
         {
@@ -134,6 +154,18 @@ namespace MvcDemoApp.Controllers
 
             Employee employee = Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
             _repository.Add(employee);
+            _repository.Save();
+            return RedirectToAction("Index");
+        }
+
+
+
+        public ActionResult DeleteEmployee(string essn)
+        {
+
+
+            var employee = _repository.GetEmployee(essn);
+            _repository.Delete(employee);
             _repository.Save();
             return RedirectToAction("Index");
         }

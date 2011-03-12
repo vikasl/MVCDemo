@@ -93,7 +93,7 @@
     <Content Include="Views\Employee\AddEmployee.aspx" />
     <Content Include="Views\Employee\EditEmployee.aspx" />
     <Content Include="Views\Employee\ListEmployee.aspx" />
-    <Content Include="Views\Shared\EmployeeData.aspx" />
+    <Content Include="Views\Employee\EmployeeData.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

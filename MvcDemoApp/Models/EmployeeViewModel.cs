@@ -13,10 +13,10 @@ namespace MvcDemoApp.Models
         public char Minit { get; set; }
 
         [Required(ErrorMessage = "LastName cannot be null")]
-        
         public string Lname { get; set; }
         
-         [RegularExpression(@"^(?!000)([0-6]\d{2}|7([0-6]\d|7[012]))([ -]?)(?!00)\d\d\3(?!0000)\d{4}$", ErrorMessage = "Social Security Number is not Valid")]
+        [RegularExpression(@"^(?!000)([0-6]\d{2}|7([0-6]\d|7[012]))([ -]?)(?!00)\d\d\3(?!0000)\d{4}$", ErrorMessage = "Social Security Number is not Valid")]
+        [Required(ErrorMessage = "SSN canot be null")]
         public string Ssn { get; set; }
 
         [Range(typeof(DateTime), "1/2/1800", "1/1/2020", ErrorMessage = "Date is not valid")] 
@@ -34,6 +34,8 @@ namespace MvcDemoApp.Models
         
         [Range(1,1000, ErrorMessage = "Department No should be in range 1- 1000")]
         public int Dno { get; set; }
+
+        public bool EditMode { get; set; }
 
     }
 }

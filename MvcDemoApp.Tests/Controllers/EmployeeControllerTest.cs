@@ -16,7 +16,7 @@ using MvcDemoApp.Models;
 namespace MvcDemoApp.Tests.Controllers
 {
     [TestClass]
-    public class EmploeeControllerTest
+    public class EmployeeControllerTest
     {
         private IGenerationSessionFactory _generationSessionFactory;
 
@@ -43,7 +43,7 @@ namespace MvcDemoApp.Tests.Controllers
 
 
         [TestMethod]
-        public void GetEmployeeList_Should_Return_List_Of_Employee()
+        public void GetEmployeeList_Should_Return_List_Of_Employees()
         {
             var testRepository = new TestRepository();
             var employeeController = new EmployeeController(testRepository);

@@ -8,7 +8,7 @@
             <%= Html.LabelFor(model => model.Ssn)%>
         </div>
         <div class="editor-field">
-            <%if (!String.IsNullOrEmpty(Model.Ssn))
+            <%if (Model.EditMode)
               {%>
                 <%=Html.TextBoxFor(model => model.Ssn, new {@readonly = "readonly", @class= "disabled"})%>
             <%}

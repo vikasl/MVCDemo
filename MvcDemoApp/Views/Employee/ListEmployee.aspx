@@ -44,10 +44,7 @@
                 </div>
                     <div class="gridRowItem gridColumnBdate">
                     ${shortBdate}
-
-
-                   
-                </div>
+               </div>
                     <div class="gridRowItem gridColumnAddress">
                     ${Address}
                 </div>
