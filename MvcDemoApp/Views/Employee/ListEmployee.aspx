@@ -80,9 +80,9 @@
         style="overflow: hidden">
         <div class="gridHeaderRowItem gridColumnFname withBorder">
             First Name</div>
-        <div class="gridHeaderRowItem gridColumnMinitial withBorder">
+        <div class="gridHeaderRowItem gridColumnMinit withBorder">
             Middle Init</div>
-        <div class="gridHeaderRowItem gridColumnLName withBorder">
+        <div class="gridHeaderRowItem gridColumnLname withBorder">
             Last Name</div>
         <div class="gridHeaderRowItem gridColumnSsn withBorder">
             Soc No</div>

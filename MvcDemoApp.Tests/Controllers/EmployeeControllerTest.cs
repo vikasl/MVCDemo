@@ -1,12 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
-using AutoPoco;
-using AutoPoco.DataSources;
-using AutoPoco.Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MvcDemoApp.Controllers;
@@ -18,25 +14,18 @@ namespace MvcDemoApp.Tests.Controllers
     [TestClass]
     public class EmployeeControllerTest
     {
-        private IGenerationSessionFactory _generationSessionFactory;
-
-
-
-        [TestInitialize]
-        public void Setup()
-        {
-
-        }
-
-
-
-
         [TestMethod]
         public void IndexAction_Should_Return_View_For_ListEmployee()
         {
+            //Arrange
             var testRepository = new TestRepository();
             var employeeController = new EmployeeController(testRepository);
-            var result = employeeController.Index();
+
+            //Act
+            ViewResult result = employeeController.Index();
+
+
+            //Assert
             Assert.IsNotNull(result);
             Assert.AreEqual("ListEmployee", result.ViewName);
         }
@@ -47,14 +36,13 @@ namespace MvcDemoApp.Tests.Controllers
         {
             var testRepository = new TestRepository();
             var employeeController = new EmployeeController(testRepository);
-            var result = employeeController.GetEmployeeList();
+            JsonResult result = employeeController.GetEmployeeList();
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Data);
-            Assert.IsInstanceOfType(result.Data, typeof(IQueryable<Employee>));
-            Assert.AreEqual(((IQueryable<Employee>)(result.Data)).Count( ), 2);
-            Assert.AreEqual(((IQueryable<Employee>)(result.Data)).First().Fname, "John");
+            Assert.IsInstanceOfType(result.Data, typeof (IQueryable<Employee>));
+            Assert.AreEqual(((IQueryable<Employee>) (result.Data)).Count(), 2);
+            Assert.AreEqual(((IQueryable<Employee>) (result.Data)).First().Fname, "John");
         }
-
 
 
         [TestMethod]
@@ -62,63 +50,61 @@ namespace MvcDemoApp.Tests.Controllers
         {
             var testRepository = new TestRepository();
             var employeeController = new EmployeeController(testRepository);
-            var result = employeeController.EditEmployee("123-321-1234");
-            Assert.IsNotNull(result);   
-            Assert.IsInstanceOfType(result.ViewData.Model,typeof(EmployeeViewModel) );
-            Assert.AreEqual(((EmployeeViewModel)result.ViewData.Model).Fname, "John");
-            Assert.AreEqual(((EmployeeViewModel)result.ViewData.Model).Lname, "Doe");
-
+            ViewResult result = employeeController.EditEmployee("123-321-1234");
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result.ViewData.Model, typeof (EmployeeViewModel));
+            Assert.AreEqual(((EmployeeViewModel) result.ViewData.Model).Fname, "John");
+            Assert.AreEqual(((EmployeeViewModel) result.ViewData.Model).Lname, "Doe");
         }
 
         [TestMethod]
         public void EditEmployee_Post_Should_Return_EditEmployee_View_With_Required_Data_Missing()
         {
-
-            var employee = new EmployeeViewModel { Fname = "Ray",  Ssn = "123-03-0989", Dno = 99 };
+            var employee = new EmployeeViewModel {Fname = "Ray", Ssn = "123-03-0989", Dno = 99};
             var validationContext = new ValidationContext(employee, null, null);
             var testRepository = new TestRepository();
- 
+
             var employeeController = new EmployeeController(testRepository);
 
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(employee, validationContext, validationResults, true);
-            foreach (var validationResult in validationResults)
+            foreach (ValidationResult validationResult in validationResults)
             {
-                employeeController.ModelState.AddModelError(validationResult.MemberNames.First(), validationResult.ErrorMessage);
+                employeeController.ModelState.AddModelError(validationResult.MemberNames.First(),
+                                                            validationResult.ErrorMessage);
             }
 
-            var result = employeeController.EditEmployee(employee);
+            ActionResult result = employeeController.EditEmployee(employee);
 
             Assert.IsNotNull(result);
 
-            Assert.AreEqual( "EditEmployee", ((ViewResult)result).ViewName  );
+            Assert.AreEqual("EditEmployee", ((ViewResult) result).ViewName);
         }
 
 
         [TestMethod]
         public void EditEmployee_Post_Should_Return_EditEmployee_View_When_Invalid_Ssn()
         {
-            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Ssn = "ABC-09"};
+            var employee = new EmployeeViewModel {Fname = "Ray", Lname = "Romano", Ssn = "ABC-09"};
             var validationContext = new ValidationContext(employee, null, null);
             var testRepository = new TestRepository();
 
             var employeeController = new EmployeeController(testRepository);
 
             var validationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(employee, validationContext, validationResults,true);
-            foreach (var validationResult in validationResults)
+            Validator.TryValidateObject(employee, validationContext, validationResults, true);
+            foreach (ValidationResult validationResult in validationResults)
             {
-                employeeController.ModelState.AddModelError(validationResult.MemberNames.First(), validationResult.ErrorMessage);
+                employeeController.ModelState.AddModelError(validationResult.MemberNames.First(),
+                                                            validationResult.ErrorMessage);
             }
 
-            var result = employeeController.EditEmployee(employee);
+            ActionResult result = employeeController.EditEmployee(employee);
 
             Assert.IsNotNull(result);
 
-            Assert.AreEqual("EditEmployee", ((ViewResult)result).ViewName);
-
+            Assert.AreEqual("EditEmployee", ((ViewResult) result).ViewName);
         }
-
 
 
         [TestMethod]
@@ -132,13 +118,13 @@ namespace MvcDemoApp.Tests.Controllers
 
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(employee, validationContext, validationResults, true);
-            foreach (var validationResult in validationResults)
+            foreach (ValidationResult validationResult in validationResults)
             {
                 employeeController.ModelState.AddModelError(validationResult.MemberNames.First(),
                                                             validationResult.ErrorMessage);
             }
 
-            var result = employeeController.EditEmployee(employee);
+            ActionResult result = employeeController.EditEmployee(employee);
 
             Assert.IsNotNull(result);
 
@@ -146,13 +132,17 @@ namespace MvcDemoApp.Tests.Controllers
         }
 
 
-
-
-
         [TestMethod]
         public void EditEmployee_Post_Should_Save_And_Redirect_ToIndex_When_Data_Is_Valid()
         {
-            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Bdate = new DateTime(1980, 10, 01), Ssn = "123-02-1234", Dno = 99 };
+            var employee = new EmployeeViewModel
+                               {
+                                   Fname = "Ray",
+                                   Lname = "Romano",
+                                   Bdate = new DateTime(1980, 10, 01),
+                                   Ssn = "123-02-1234",
+                                   Dno = 99
+                               };
             var validationContext = new ValidationContext(employee, null, null);
             var testRepository = new TestRepository();
 
@@ -160,16 +150,15 @@ namespace MvcDemoApp.Tests.Controllers
 
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(employee, validationContext, validationResults, true);
-            foreach (var validationResult in validationResults)
+            foreach (ValidationResult validationResult in validationResults)
             {
                 employeeController.ModelState.AddModelError(validationResult.MemberNames.First(),
                                                             validationResult.ErrorMessage);
             }
-            var result = (RedirectToRouteResult)employeeController.EditEmployee(employee);
+            var result = (RedirectToRouteResult) employeeController.EditEmployee(employee);
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof (RedirectToRouteResult));
             Assert.AreEqual("Index", result.RouteValues["action"]);
-           
         }
 
 
@@ -179,55 +168,55 @@ namespace MvcDemoApp.Tests.Controllers
             var testRepository = new TestRepository();
 
             var employeeController = new EmployeeController(testRepository);
-            var result =  employeeController.AddEmployee();
+            ViewResult result = employeeController.AddEmployee();
             Assert.IsNotNull(result);
- 
-            Assert.AreEqual( "AddEmployee", ((ViewResult)result).ViewName);
 
-
-
+            Assert.AreEqual("AddEmployee", (result).ViewName);
         }
 
 
         [TestMethod]
         public void AddEmployee_Post_Should_Call_Save_On_Reposiotry_And_Redirect_To_Index()
         {
-            var employee = new EmployeeViewModel { Fname = "Ray", Lname = "Romano", Bdate = new DateTime(1980,10,01), Ssn = "123-02-1234", Dno = 99 };
+            var employee = new EmployeeViewModel
+                               {
+                                   Fname = "Ray",
+                                   Lname = "Romano",
+                                   Bdate = new DateTime(1980, 10, 01),
+                                   Ssn = "123-02-1234",
+                                   Dno = 99
+                               };
             var validationContext = new ValidationContext(employee, null, null);
 
             //Create a mock repository 
             var mockRepository = new Mock<IEmployeeRepository>();
-           
+
             var employeeController = new EmployeeController(mockRepository.Object);
 
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(employee, validationContext, validationResults, true);
-            foreach (var validationResult in validationResults)
+            foreach (ValidationResult validationResult in validationResults)
             {
                 employeeController.ModelState.AddModelError(validationResult.MemberNames.First(),
                                                             validationResult.ErrorMessage);
             }
-            var result = (RedirectToRouteResult)employeeController.AddEmployee(employee);
+            var result = (RedirectToRouteResult) employeeController.AddEmployee(employee);
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            Assert.IsInstanceOfType(result, typeof (RedirectToRouteResult));
             Assert.AreEqual("Index", result.RouteValues["action"]);
 
-            mockRepository.Verify(x=>x.Save(), Times.AtMostOnce() );
-
-
+            mockRepository.Verify(x => x.Save(), Times.AtMostOnce());
         }
 
 
         [TestMethod]
-        public void DeleTemployee_Call_Delete_Method_On_Repository()
+        public void DeleteEmployee_Call_Delete_Method_On_Repository()
         {
             var mockRepository = new Mock<IEmployeeRepository>();
 
             var employeeController = new EmployeeController(mockRepository.Object);
             employeeController.DeleteEmployee("123-45-4321");
-            mockRepository.Verify(x=>x.Delete(It.IsAny<Employee>()), Times.AtMostOnce() );
+            mockRepository.Verify(x => x.Delete(It.IsAny<Employee>()), Times.AtMostOnce());
         }
-
-
     }
 }

@@ -55,11 +55,11 @@
 .gridHeaderRow
 {
     background-color: #BBBBBB;
-    color: #FFFFFF;
+    color: #000000;
     font-weight: bold;
-    font-size: .9em;
+    font-size: 1em;
     width: 100%;
-    height: 20px;
+    height: 40px;
 }
 
 
@@ -90,7 +90,7 @@ Employee Grid
 }
 .gridColumnAddress
 {
-    width: 175px;
+    width: 225px;
 }
 
 
@@ -148,6 +148,12 @@ Header Heights for Employee Grid
 {
     height: 40px;
 }
+
+#employeeGridHeaderContainer .gridColumnSex
+{
+    height: 40px;
+}
+
 
 #employeeGridHeaderContainer .gridColumnSalary
 {
